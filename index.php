@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dipendenti OOP</title>
+
 </head>
 
 <body>
@@ -42,7 +43,10 @@
 
         public function setName($name)
         {
-            return $this->name = $name;
+            if (gettype($name) === 'string') {
+
+                return $this->name = $name;
+            }
         }
 
 
@@ -53,7 +57,10 @@
 
         public function setLastName($lastname)
         {
-            return $this->lastname = $lastname;
+            if (gettype($lastname) === 'string') {
+
+                return $this->lastname = $lastname;
+            }
         }
         public function getDateOfBirth()
         {
@@ -62,7 +69,10 @@
 
         public function setDateOfBirth($dateOfBirth)
         {
-            return $this->dateOfBirth = $dateOfBirth;
+            if (gettype($dateOfBirth) === 'string') {
+
+                return $this->dateOfBirth = $dateOfBirth;
+            }
         }
         public function __toString()
         {
@@ -96,7 +106,10 @@
 
         public function setQualifica($qualifica)
         {
-            return $this->qualifica = $qualifica;
+            if (gettype($qualifica) === 'string') {
+
+                return $this->qualifica = $qualifica;
+            }
         }
 
         public function getRal()
@@ -106,7 +119,10 @@
 
         public function setRal($ral)
         {
-            return $this->ral = $ral;
+            if (gettype($ral) === 'integer') {
+
+                return $this->ral = $ral;
+            }
         }
         public function getId()
         {
@@ -115,7 +131,10 @@
 
         public function setId($id)
         {
-            return $this->id = $id;
+            if (gettype($id) === 'integer') {
+
+                return $this->id = $id;
+            }
         }
         public function __toString()
         {
@@ -160,7 +179,11 @@
         }
         public function setSede($sede)
         {
-            $this->sede = $sede;
+
+            if (gettype($sede) === 'string') {
+
+                return $this->sede = $sede;
+            }
         }
         public function getEmail()
         {
@@ -168,7 +191,11 @@
         }
         public function setEmail($email)
         {
-            $this->email = $email;
+
+            if (gettype($email) === 'string') {
+
+                return $this->email = $email;
+            }
         }
 
         public function __toString()
@@ -186,9 +213,9 @@
     $boss = new Boss('Mario', 'Rossi', '1992-12-03', 'dirigente', 60000, 0001, 'Bologna', 'boss@gmail.com');
 
     echo  '<br>'
-        . $persona . '<br>'
-        . $dipendente . '<br>'
-        . $boss;
+        . '<strong>Persona</strong> ' . '<br>' . $persona . '<br>'
+        . '<strong>Dipendente</strong> ' . '<br>' . $dipendente . '<br>'
+        . '<strong>Boss</strong> ' . '<br>' . $boss;
 
     ?>
 </body>
