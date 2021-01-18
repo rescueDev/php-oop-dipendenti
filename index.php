@@ -66,14 +66,11 @@
         }
         public function __toString()
         {
-            return 'name: ' . $this->getName() . '<br>'
+            return '<br>' . 'name: ' . $this->getName() . '<br>'
                 . 'lastname: ' . $this->getLastName() . '<br>'
                 . 'dateOfBirth: ' . $this->getDateOfBirth() . '<br>';
         }
     }
-
-
-
 
 
     class Dipendente extends Person
@@ -122,23 +119,76 @@
         }
         public function __toString()
         {
-            return parent::__toString() . '<br>'
+            return parent::__toString()
                 . 'qualifica: ' . $this->getQualifica() . '<br>'
                 . 'ral: ' . $this->getRal() . '<br>'
-                . 'id: ' . $this->getId();
+                . 'id: ' . $this->getId() . '<br>';
         }
     }
 
-    // $person = new Person('Mario', 'Rossi', '1992-12-03');
-    $dipendente = new Dipendente('Mario', 'Rossi', '1992-12-03', 'operaio', 20000, 2345);
 
-    echo $dipendente;
 
-    class Boss
+    class Boss extends Dipendente
     {
+        private $sede;
+        private $email;
+
+        public function __construct(
+            $name,
+            $lastname,
+            $dateOfBirth,
+            $qualifica,
+            $ral,
+            $id,
+            $sede,
+            $email
+        ) {
+            parent::__construct(
+                $name,
+                $lastname,
+                $dateOfBirth,
+                $qualifica,
+                $ral,
+                $id
+            );
+            $this->setSede($sede);
+            $this->setEmail($email);
+        }
+        public function getSede()
+        {
+            return $this->sede;
+        }
+        public function setSede($sede)
+        {
+            $this->sede = $sede;
+        }
+        public function getEmail()
+        {
+            return $this->email;
+        }
+        public function setEmail($email)
+        {
+            $this->email = $email;
+        }
+
+        public function __toString()
+        {
+            return parent::__toString()
+
+                . 'sede: ' . $this->getSede() . '<br>'
+                . 'email: ' . $this->getEmail() . '<br>';
+        }
     }
 
 
+    $persona = new Person('Gianni', 'Bianchi', '1970-12-24');
+    $dipendente = new Dipendente('Fiorenzo', 'Verdi', '1998-01-02', 'operaio', 20000, 2345);
+    $boss = new Boss('Mario', 'Rossi', '1992-12-03', 'dirigente', 60000, 0001, 'Bologna', 'boss@gmail.com');
+
+    echo  '<br>'
+        . $persona . '<br>'
+        . $dipendente . '<br>'
+        . $boss;
 
     ?>
 </body>
