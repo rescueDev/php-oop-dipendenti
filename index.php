@@ -72,27 +72,26 @@
         }
     }
 
-    $person = new Person('Mario', 'Rossi', '1992-12-03');
-
-    echo $person;
 
 
 
-    class Dipendente
+
+    class Dipendente extends Person
     {
         private $qualifica;
         private $ral;
         private $id;
 
-        public function __construct(
-            $qualifica,
-            $ral,
-            $id
-        ) {
+        public function __construct($name, $lastname, $dateOfBirth, $qualifica, $ral, $id)
+        {
+
+            parent::__construct($name, $lastname, $dateOfBirth);
+
             $this->setQualifica($qualifica);
             $this->setRal($ral);
             $this->setId($id);
         }
+
         public function getQualifica()
         {
             return $this->qualifica;
@@ -121,7 +120,19 @@
         {
             return $this->id = $id;
         }
+        public function __toString()
+        {
+            return parent::__toString() . '<br>'
+                . 'qualifica: ' . $this->getQualifica() . '<br>'
+                . 'ral: ' . $this->getRal() . '<br>'
+                . 'id: ' . $this->getId();
+        }
     }
+
+    // $person = new Person('Mario', 'Rossi', '1992-12-03');
+    $dipendente = new Dipendente('Mario', 'Rossi', '1992-12-03', 'operaio', 20000, 2345);
+
+    echo $dipendente;
 
     class Boss
     {
