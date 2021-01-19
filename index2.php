@@ -36,7 +36,9 @@
         }
         public function setName($name)
         {
-
+            if (strlen($name) < 3) {
+                throw new Exception('name must be at least 3 charact');
+            }
             $this->name = $name;
         }
         public function getLastname()
@@ -45,6 +47,9 @@
         }
         public function setLastname($lastname)
         {
+            if (strlen($lastname) < 3) {
+                throw new Exception('name must be at least 3 charact');
+            }
             $this->lastname = $lastname;
         }
         public function getFullname()
@@ -215,7 +220,7 @@
                 . 'sector: ' . $this->getSector() . '<br>'
                 . 'employees:<br>' . $this->getEmpsStr() . '<br>';
         }
-        private function getEmpsStr()
+        /* private function getEmpsStr()
         {
             $str = '';
             for ($x = 0; $x < count($this->getEmployees()); $x++) {
@@ -224,14 +229,23 @@
                 $str .= ($x + 1) . ': ' . $fullname . '<br>';
             }
             return $str;
-        }
+        } */
     }
-    $p1 = new Person(
-        'Gianni',
-        '',
-        '(p)dateOfBirth',
-        '(p)securyLvl',
-    );
+
+    try {
+
+        $p1 = new Person(
+            'Gianni',
+            'Bianchi',
+            '2000-12-23',
+            6,
+        );
+        echo $p1;
+    } catch (Exception $e) {
+        echo 'Error: name is less than 3 char';
+    }
+
+
     // echo 'p1:<br>' . $p1 . '<br><br>';
     $e1 = new Employee(
         '(e)name',
