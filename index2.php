@@ -37,7 +37,7 @@
         public function setName($name)
         {
             if (strlen($name) < 3) {
-                throw new Exception('name must be at least 3 charact');
+                throw new NameLength('name must be at least 3 charact');
             }
             $this->name = $name;
         }
@@ -48,7 +48,7 @@
         public function setLastname($lastname)
         {
             if (strlen($lastname) < 3) {
-                throw new Exception('name must be at least 3 charact');
+                throw new LastNameLength('name must be at least 3 charact');
             }
             $this->lastname = $lastname;
         }
@@ -112,7 +112,7 @@
         public function setRal($ral)
         {
             if (!($ral >= 10000 && $ral <= 100000)) {
-                throw new Exception("Ral must be value from 10.000 to 100.000");
+                throw new RalRange("Ral must be value from 10.000 to 100.000");
             }
             $this->ral = $ral;
         }
@@ -151,7 +151,7 @@
         public function setSecuryLvl($securyLvl)
         {
             if (!($securyLvl >= 1 && $securyLvl <= 5)) {
-                throw new Exception("Security Level must be value from 1 to 5");
+                throw new SecurityLvl("Security Level must be value from 1 to 5");
             }
             $this->securyLvl = $securyLvl;
         }
@@ -226,7 +226,7 @@
         public function setSecuryLvl($securyLvl)
         {
             if ($securyLvl < 6 || $securyLvl > 10) {
-                throw new Exception("secuirity lvl must be between 6 to 10 for bosses");
+                throw new SecurityLvl("secuirity lvl must be between 6 to 10 for bosses");
             }
             $this->securyLvl = $securyLvl;
         }
@@ -249,6 +249,19 @@
         }
     }
 
+    class NameLength extends Exception
+    {
+    };
+    class LastNameLength extends Exception
+    {
+    };
+    class SecurityLvl extends Exception
+    {
+    };
+    class RalRange extends Exception
+    {
+    };
+
 
 
     //istanza person
@@ -261,8 +274,10 @@
             6,
         );
         echo '<br> <strong>Person:</strong> <br>' . $p1;
-    } catch (Exception $e) {
+    } catch (NameLength $e) {
         echo '<br>Error: name is less than 3 char';
+    } catch (LastNameLength $e) {
+        echo '<br>Error: Lastname is less than 3 char';
     }
 
 
@@ -282,8 +297,10 @@
             '(e)dateOfHiring',
         );
         echo  '<br> <strong>Employee:</strong><br>'  . $e1;
-    } catch (Exception $e) {
+    } catch (SecurityLvl $e) {
         echo '<br>Security level must be between 1 and 5 for employees';
+    } catch (RalRange $e) {
+        echo '<br>Ral range must be between 10.000 and 100.000';
     }
 
 
@@ -292,8 +309,8 @@
             'Giorgio',
             'Maserati',
             '(b)dateOfBirth',
-            6,
-            '100000',
+            7,
+            100000,
             '(b)mainTask',
             '(b)idCode',
             '(b)dateOfHiring',
@@ -306,11 +323,14 @@
             ]
         );
         echo '<br> <strong>Boss:</strong><br>' . $b1 . '<br><br>';
-    } catch (Exception $e) {
-        echo '<br>Bosses security level must be greater than 5 and smaller than 11';
+    } catch (SecurityLvl $e) {
+        echo '<br>Security level must be between 6 and 10 for bosses';
+    } catch (RalRange $e) {
+        echo '<br>Ral range must be between 10.000 and 100.000';
     }
 
-    // echo 'e1:<br>' . $e1 . '<br><br>';
+
+
 
 
     ?>
