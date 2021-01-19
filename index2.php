@@ -22,7 +22,7 @@
         private $name;
         private $lastname;
         private $dateOfBirth;
-        private $securyLvl;
+        protected $securyLvl;
         public function __construct($name, $lastname, $dateOfBirth, $securyLvl)
         {
             $this->setName($name);
@@ -70,6 +70,7 @@
         }
         public function setSecuryLvl($securyLvl)
         {
+
             $this->securyLvl = $securyLvl;
         }
         public function __toString()
@@ -110,6 +111,9 @@
         }
         public function setRal($ral)
         {
+            if ($ral < 10000 || $ral > 100000) {
+                throw new Exception('ral range must be between 10000 and 100000');
+            }
             $this->ral = $ral;
         }
         public function getMainTask()
@@ -136,9 +140,16 @@
         {
             $this->dateOfHiring = $dateOfHiring;
         }
+        public function setSecuryLvl($securyLvl)
+        {
+            if ($securyLvl < 1 || $securyLvl > 5) {
+                throw new Exception('secuirity lvl must be between 1 to 5 for employees');
+            }
+            $this->securyLvl = $securyLvl;
+        }
         public function __toString()
         {
-            return parent::__toString() . '<br>'
+            return parent::__toString()
                 . 'ral: ' . $this->ral . '<br>'
                 . 'mainTask: ' . $this->mainTask . '<br>'
                 . 'idCode: ' . $this->idCode . '<br>'
@@ -162,8 +173,8 @@
             $dateOfHiring,
             $profit,
             $vacancy,
-            $sector,
-            $employees = []
+            $sector
+
         ) {
             parent::__construct(
                 $name,
@@ -178,7 +189,6 @@
             $this->setProfit($profit);
             $this->setVacancy($vacancy);
             $this->setSector($sector);
-            $this->setEmployees($employees);
         }
         public function getProfit()
         {
@@ -204,59 +214,79 @@
         {
             $this->sector = $sector;
         }
-        public function getEmployees()
+
+        public function setSecuryLvl($securyLvl)
         {
-            return $this->employees;
-        }
-        public function setEmployees($employees)
-        {
-            $this->employees = $employees;
+            if ($securyLvl < 6 || $securyLvl > 10) {
+                throw new Exception('secuirity lvl must be between 6 to 10 for bosses');
+            }
+            $this->securyLvl = $securyLvl;
         }
         public function __toString()
         {
             return parent::__toString() . '<br>'
                 . 'profit: ' . $this->getProfit() . '<br>'
                 . 'vacancy: ' . $this->getVacancy() . '<br>'
-                . 'sector: ' . $this->getSector() . '<br>'
-                . 'employees:<br>' . $this->getEmpsStr() . '<br>';
+                . 'sector: ' . $this->getSector() . '<br>';
         }
-        /* private function getEmpsStr()
-        {
-            $str = '';
-            for ($x = 0; $x < count($this->getEmployees()); $x++) {
-                $emp = $this->getEmployees()[$x];
-                $fullname = $emp->getName() . ' ' . $emp->getLastname();
-                $str .= ($x + 1) . ': ' . $fullname . '<br>';
-            }
-            return $str;
-        } */
     }
 
+
+
+    //istanza person
     try {
 
         $p1 = new Person(
             'Gianni',
             'Bianchi',
             '2000-12-23',
-            6,
+            1,
         );
-        echo $p1;
+        echo '<br>'  . '<strong>Person</strong>' .  '<br>' . $p1;
     } catch (Exception $e) {
         echo 'Error: name is less than 3 char';
     }
 
 
-    // echo 'p1:<br>' . $p1 . '<br><br>';
-    $e1 = new Employee(
-        '(e)name',
-        '(e)lastname',
-        '(e)dateOfBirth',
-        '(e)securyLvl',
-        '(e)ral',
-        '(e)mainTask',
-        '(e)idCode',
-        '(e)dateOfHiring',
-    );
+
+
+    //istanza employee security level
+    try {
+
+        $e1 = new Employee(
+            'Giovanni',
+            'Rossi',
+            '1992-12-04',
+            5,
+            10000,
+            '(e)mainTask',
+            '(e)idCode',
+            '(e)dateOfHiring',
+        );
+        echo  '<br>'  . '<strong>Employee</strong>' .  '<br>'  . $e1;
+    } catch (Exception $e) {
+        echo 'Security level must be between 1 and 5 for employees';
+    }
+
+    //istanza employee ral
+    try {
+
+        $e2 = new Employee(
+            'Giovanni',
+            'Rossi',
+            '1992-12-04',
+            5,
+            1000,
+            '(e)mainTask',
+            '(e)idCode',
+            '(e)dateOfHiring',
+        );
+        echo  '<br>'  . '<strong>Employee</strong>' .  '<br>'  . $e2;
+    } catch (Exception $e) {
+        echo 'Ral error';
+    }
+
+
     // echo 'e1:<br>' . $e1 . '<br><br>';
     $b1 = new Boss(
         '(b)name',
@@ -270,12 +300,6 @@
         '(b)profit',
         '(b)vacancy',
         '(b)sector',
-        [
-            $e1,
-            $e1,
-            $e1,
-            $e1,
-        ]
     );
     echo 'b1:<br>' . $b1 . '<br><br>';
 
